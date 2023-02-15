@@ -15,6 +15,13 @@ RUN useradd -m --shell=/bin/bash build && usermod -L build && \
 # Install AUR builder and packages
 USER build
 WORKDIR /home/build
+
+RUN git clone https://github.com/KyleGospo/xdg-utils-distrobox-arch.git --single-branch && \
+    cd xdg-utils-distrobox-arch/trunk && \
+    makepkg -si --noconfirm && \
+    cd ../.. && \
+    rm -drf xdg-utils-distrobox-arch
+
 RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     cd yay-bin && \
     makepkg -si --noconfirm && \
