@@ -22,7 +22,48 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     rm -drf yay-bin && \
     yay -S --noconfirm \
         alhp-keyring \
-        alhp-mirrorlist
+        alhp-mirrorlist \
+        bash-completion \
+        bc \
+        curl \
+        diffutils \
+        findutils \
+        glibc \
+        gnupg \
+        inetutils \
+        keyutils \
+        less \
+        lsof \
+        man-db \
+        man-pages \
+        mlocate \
+        mtr \
+        ncurses \
+        nss-mdns \
+        openssh \
+        pigz \
+        pinentry \
+        procps-ng \
+        rsync \
+        shadow \
+        sudo \
+        tcpdump \
+        time \
+        traceroute \
+        tree \
+        tzdata \
+        unzip \
+        util-linux \
+        util-linux-libs \
+        vte-common \
+        wget \
+        words \
+        xorg-xauth \
+        zip \
+        mesa \
+        opengl-driver \
+        vulkan-intel \
+        vte-common
 
 # Cleanup AUR builder
 USER root
