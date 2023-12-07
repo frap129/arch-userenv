@@ -83,6 +83,12 @@ RUN userdel -r build && \
         /tmp/* \
         /var/cache/pacman/pkg/*d a user for it
 
+# Setup ALHP
+# Do this last so we only have to reinstall final system packages and not build deps
+RUN sed -i '/\#\[core-testing\]/i \
+[core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf && \
+    pacman -Syyu --noconfirm
+
 # Native march & tune. We do this last because it'll only apply to updates the user makes going forward.
 # We don't want to optimize for the build host's environment.
 RUN sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/makepkg.conf
