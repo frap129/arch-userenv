@@ -7,10 +7,6 @@ RUN pacman-key --init && \
 # Install git
 RUN pacman -Syy git --noconfirm
 
-# Setup ALHP
-RUN sed -i '/\#\[core-testing\]/i \
-[core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf
-
 # Create build user
 RUN useradd -m --shell=/bin/bash build && usermod -L build && \
     echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
@@ -40,9 +36,13 @@ RUN userdel -r build && \
         /tmp/* \
         /var/cache/pacman/pkg/*d a user for it
 
+# Setup ALHP
+RUN sed -i '/\#\[core-testing\]/i \
+[core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf && \
+    pacman -Syy --noconfirm
+
 # Bootstrap a new rootfs
 RUN mkdir /newroot && \
-    pacman --noconfirm -Sy arch-install-script
     pacstrap -K /newroot base-devel
 
 FROM scratch AS builder
@@ -54,10 +54,6 @@ RUN pacman-key --init && \
 
 # Install git
 RUN pacman -Syy git --noconfirm
-
-# Setup ALHP
-RUN sed -i '/\#\[core-testing\]/i \
-[core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf
 
 # Create build user
 RUN useradd -m --shell=/bin/bash build && usermod -L build && \
