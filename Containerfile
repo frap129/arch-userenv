@@ -62,9 +62,15 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
         unzip \
         util-linux \
         util-linux-libs \
+        vte-common \
         wget \
         words \
-        zip
+        xorg-xauth \
+        zip \
+        mesa \
+        opengl-driver \
+        vulkan-intel \
+        vte-common
 
 # Cleanup AUR builder
 USER root
