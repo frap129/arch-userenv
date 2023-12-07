@@ -4,6 +4,9 @@ FROM docker.io/archlinux:base-devel as bootstrap
 RUN pacman-key --init && \
     pacman-key --populate
 
+# Install git
+RUN pacman -Syy git --noconfirm
+
 # Setup ALHP
 RUN sed -i '/\#\[core-testing\]/i \
 [core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf
@@ -21,7 +24,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     makepkg -si --noconfirm && \
     cd .. && \
     rm -drf yay-bin && \
-    yay -Syy --noconfirm --removemake=yes --nokeepsrc \
+    yay -S --noconfirm --removemake=yes --nokeepsrc \
         arch-install-script
         alhp-keyring \
         alhp-mirrorlist
@@ -49,6 +52,9 @@ COPY --from=bootstrap /newroot /
 RUN pacman-key --init && \
     pacman-key --populate
 
+# Install git
+RUN pacman -Syy git --noconfirm
+
 # Setup ALHP
 RUN sed -i '/\#\[core-testing\]/i \
 [core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf
@@ -67,7 +73,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     makepkg -si --noconfirm && \
     cd .. && \
     rm -drf yay-bin && \
-    yay -Syy --noconfirm --removemake=yes --nokeepsrc \
+    yay -S --noconfirm --removemake=yes --nokeepsrc \
         alhp-keyring \
         alhp-mirrorlist \
         - < extra-packages && \
