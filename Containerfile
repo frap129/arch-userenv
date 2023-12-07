@@ -86,6 +86,10 @@ RUN userdel -r build && \
         /tmp/* \
         /var/cache/pacman/pkg/*d a user for it
 
+# Native march & tune. We do this last because it'll only apply to updates the user makes going forward.
+# We don't want to optimize for the build host's environment.
+RUN sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/makepkg.conf
+
 # Copy contents of builder image to root to remove previous image layers
 FROM scratch as arch-userenv
 COPY --from=builder / /
