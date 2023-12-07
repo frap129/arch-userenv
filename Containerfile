@@ -20,7 +20,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     makepkg -si --noconfirm && \
     cd .. && \
     rm -drf yay-bin && \
-    yay -S --noconfirm --removemake=yes --nokeepsrc \
+    yay -S --noconfirm --removemake=yes \
         arch-install-script
         alhp-keyring \
         alhp-mirrorlist
@@ -69,7 +69,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     makepkg -si --noconfirm && \
     cd .. && \
     rm -drf yay-bin && \
-    yay -S --noconfirm --removemake=yes --nokeepsrc \
+    yay -S --noconfirm --removemake=yes \
         alhp-keyring \
         alhp-mirrorlist \
         - < extra-packages && \
