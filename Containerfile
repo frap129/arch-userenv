@@ -21,7 +21,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     cd .. && \
     rm -drf yay-bin && \
     yay -S --noconfirm --removemake=yes \
-        arch-install-script
+        arch-install-script \
         alhp-keyring \
         alhp-mirrorlist
 
