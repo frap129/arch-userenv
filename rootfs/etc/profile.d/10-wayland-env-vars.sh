@@ -10,4 +10,4 @@ if [[ $XDG_SESSION_TYPE == wayland ]]; then
     export CLUTTER_BACKEND=wayland
     export ECORE_EVAS_ENGINE=wayland_egl
     export _JAVA_AWT_WM_NONREPARENTING=1
-done;
+fi
