@@ -83,6 +83,8 @@ RUN userdel -r build && \
         /tmp/* \
         /var/cache/pacman/pkg/*d a user for it
 
+COPY rootfs/ /
+
 # Setup ALHP
 # Do this last so we only have to reinstall final system packages and not build deps
 RUN sed -i '/\#\[core-testing\]/i \
