@@ -28,6 +28,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
     cd .. && \
     rm -drf yay-bin && \
     yay -S --noconfirm \
+        adw-gtk3 \
         alhp-keyring \
         alhp-mirrorlist \
         bash-completion \
@@ -62,6 +63,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
         unzip \
         util-linux \
         util-linux-libs \
+        vim \
         vte-common \
         wget \
         words \
@@ -70,7 +72,12 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
         mesa \
         opengl-driver \
         vulkan-intel \
-        vte-common
+        vulkan-radeon
+
+# Install extra packages
+COPY extra-packages /
+RUN yay -Syu --needed --noconfirm - < extra-packages
+RUN rm /extra-packages
 
 # Cleanup AUR builder
 USER root
@@ -81,15 +88,16 @@ RUN userdel -r build && \
     sed -i '/root ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers && \
     rm -rf \
         /tmp/* \
-        /var/cache/pacman/pkg/*d a user for it
+        /var/cache/pacman/pkg/*
 
+# Copy default configurations
 COPY rootfs/ /
 
 # Setup ALHP
 # Do this last so we only have to reinstall final system packages and not build deps
 RUN sed -i '/\#\[core-testing\]/i \
 [core-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n\n[extra-x86-64-v3]\nInclude = /etc/pacman.d/alhp-mirrorlist\n' /etc/pacman.conf && \
-    pacman -Syyu --noconfirm
+    pacman -Syyu --noconfirm && pacman -Scc --noconfirm
 
 # Native march & tune. We do this last because it'll only apply to updates the user makes going forward.
 # We don't want to optimize for the build host's environment.
