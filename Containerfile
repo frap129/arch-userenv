@@ -77,7 +77,6 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
 # Install extra packages
 COPY extra-packages /extra-packages
 RUN cat /extra-packages | xargs | yay -Syu --needed --noconfirm
-RUN rm /extra-packages
 
 # Cleanup AUR builder
 USER root
@@ -87,6 +86,7 @@ RUN userdel -r build && \
     sed -i '/build ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers && \
     sed -i '/root ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers && \
     rm -rf \
+        /extra-packages \
         /tmp/* \
         /var/cache/pacman/pkg/*
 
