@@ -75,8 +75,8 @@ RUN git clone https://aur.archlinux.org/yay-bin.git --single-branch && \
         vulkan-radeon
 
 # Install extra packages
-COPY extra-packages /
-RUN yay -Syu --needed --noconfirm - < extra-packages
+COPY extra-packages /extra-packages
+RUN cat /extra-packages | xargs | yay -Syu --needed --noconfirm
 RUN rm /extra-packages
 
 # Cleanup AUR builder
